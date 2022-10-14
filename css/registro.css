@@ -1,0 +1,25 @@
+body {
+  background-color: #191919;
+}
+.container {
+  height: 100vh;
+}
+img {
+  width: 100%;
+}
+
+.card {
+  padding: 30px;
+  background-color: rgb(0, 0, 0);
+  border: 1px solid #393939;
+}
+
+.img-card {
+  align-self: center;
+}
+#title-form {
+  font-family: "Archivo Black", sans-serif;
+}
+a {
+  text-decoration: none;
+}

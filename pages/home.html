@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../img/favicon.png" type="image/png" />
+    <!-- Fonts de google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <!-- =============== -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://use.fontawesome.com/c2813ccf5b.js"></script>
+    <title>Fotogram</title>
+  </head>
+  <body>
+    <header>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container text-center">
+          <a id="title-form" class="navbar-brand" href="../pages/home.html">
+            <img src="../img/favicon.png" alt="" width="50" height="45" />
+            FOTOGRAM
+          </a>
+          <button
+            type="button"
+            class="navbar-toggler"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-between"
+            id="navbarCollapse"
+          >
+            <div class="navbar-nav"></div>
+            <form class="d-flex my-2" onsubmit="buscarUsuario(event)">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  type="search"
+                  placeholder="Buscar usuario..."
+                  aria-label="Search"
+                  id="inputBuscar"
+                />
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </div>
+            </form>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <a
+                class="nav-link active text-white"
+                aria-current="page"
+                href="#"
+                id="refrescar"
+              >
+                <i
+                  class="fa fa-refresh fa-2x"
+                  role="button"
+                  id="refrescar"
+                  aria-hidden="true"
+                ></i>
+              </a>
+              <a
+                class="nav-link active text-white"
+                aria-current="page"
+                href="#"
+                id="addPublic"
+              >
+                <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
+              </a>
+              <a
+                class="nav-link active text-white"
+                aria-current="page"
+                href="#"
+                id="logout"
+              >
+                <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+              </a>
+              <a
+                class="nav-link active text-white d-lg-none"
+                aria-current="page"
+                href="#"
+                id="verUsuario"
+              >
+                <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="row mt-5">
+          <div id="contenedor_cards" class="col-12 col-lg-6 offset-lg-2"></div>
+          <div class="col">
+            <div
+              id="cardUsuario"
+              class="card card-fixed text-white d-none d-lg-block"
+            >
+              <div id="card_avatar" class="card-body d-flex">
+                <p>
+                  Debe loguearse en la web para ver contenido. Podés hacerlo
+                  desde <a href="../index.html">aquí</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="nuevaPublic"
+      tabindex="-1"
+      aria-labelledby="nuevaPublicLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-header">
+            <h5 class="modal-title" id="nuevaPublicLabel">
+              Crea una nueva publicación
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              onclick="limpiarModal()"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              id="img_modal"
+              src="../img/error_img.png"
+              alt="imagen de muestra"
+            />
+
+            <div class="mt-2 d-flex align-items-center">
+              <input
+                id="text_modal"
+                type="text"
+                class="form-control"
+                placeholder="Ingrese url de la imagen"
+              />
+            </div>
+            <div class="mt-2">
+              <textarea
+                class="form-control"
+                id="modal_textarea"
+                placeholder="Ingresa una descripción"
+                rows="3"
+              ></textarea>
+              <small class="text-muted"
+                >La descripción debe tener mínimo 10 caracteres</small
+              >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              onclick="guardarPublicacion()"
+              class="btn btn-primary"
+            >
+              Publicar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal que se muentra solo en tamaños pequeños para ver la informacion del usuario logueado -->
+    <div
+      class="modal fade"
+      id="modalUser"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Usuario logueado
+            </h1>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div id="userLogueado" class="modal-body text-center">
+            <!-- info del user aquí -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="logoutModal">
+              Cerrar sesion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/posteos.js"></script>
+  </body>
+</html>
