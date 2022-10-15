@@ -1,4 +1,3 @@
-
 //traer usuario logueado
 let usuario = JSON.parse(localStorage.getItem("usuario")) || null;
 
@@ -25,7 +24,6 @@ const cargarTabla = function () {
     return user.activo === true;
   });
   usuariosActivos.map(function (user, index) {
-
     let fila = document.createElement("tr");
 
     let estructura = `
@@ -36,8 +34,8 @@ const cargarTabla = function () {
             <img class="avatar" src="../img/${user.imagen}.png" alt=${user.nombre} />
             </td>
             <td>
-            <i class="fa fa-pencil-square-o fa-2x text-info" aria-hidden="true" role="button" onclick="abrirModal(${index})"></i>
-            <i class="fa fa-trash-o fa-2x text-danger" aria-hidden="true" role="button" onclick="borrarUsuario(${index})"></i>
+            <i class="fa fa-pencil-square-o fa-2x text-info m-2" aria-hidden="true" role="button" onclick="abrirModal(${index})"></i>
+            <i class="fa fa-trash-o fa-2x text-danger m-2" aria-hidden="true" role="button" onclick="borrarUsuario(${index})"></i>
             </td>
         `;
 
@@ -45,7 +43,6 @@ const cargarTabla = function () {
     contenidoTabla.appendChild(fila);
   });
 };
-
 
 //Función que abre el modal y crea los datos del usuario
 const abrirModal = function (indice) {
@@ -58,7 +55,7 @@ const cargarDatosUser = function (indice) {
   indiceUser = indice;
   let datos = `
                 <div class="mb-2 img_modal_avatar text-center">
-                <img  src="../img/${usuarios[indice].imagen}.png" alt=${usuarios[indice].nombre} />
+                <img  src="../img/${usuarios[indice].imagen}.png" alt=${usuarios[indice].nombre} class="avatar" />
                                 
                 </div>
                 <div class="mb-2">
@@ -100,14 +97,12 @@ const cargarDatosUser = function (indice) {
                             
     `;
 
-
   form.innerHTML = datos;
 };
 
 //Funcion que actualiza los datos del usuario cargado en el modal
 const updateUsuario = function (e) {
   e.preventDefault();
-
 
   usuarios[indiceUser].nombre = document.querySelector("#nombre").value;
   usuarios[indiceUser].email = document.querySelector("#email").value;
@@ -144,8 +139,8 @@ document.querySelector("#logout").addEventListener("click", function () {
 if (!usuario || usuario.username !== "admin") {
   let respuesta = `
   <div class="row mt-5">
-  <div class="col text-center">
-   <h3>No tiene los permisos para acceder a este contenido</h3>
+  <div class="col text-center text-white">
+   <h3>No tiene los permisos para acceder a este contenido.</h3>
   </div>
 </div>
   `;
@@ -154,4 +149,3 @@ if (!usuario || usuario.username !== "admin") {
 } else {
   cargarTabla();
 }
-
